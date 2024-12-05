@@ -16,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
 
+  /// - Method to fetch users based on connection
   Future<void> _fetchUsers () async {
     final isConnected = context.read<ConnectivityProvider>().isConnected;
     await context.read<UserProvider>().fetchUsers(isConnected: isConnected);
@@ -23,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+
+    /// - Setup callback for connectivity restoration
     final connectivity = context.read<ConnectivityProvider>();
     connectivity.onConnectedCallback = () async {
       await _fetchUsers();
@@ -119,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       }
                       if (provider.users.isEmpty) {
                         return const Center(
-                            child: Text('No posts available.'));
+                            child: Text('No Users available.'));
                       }
                       return ListView.builder(
                         itemCount: provider.users.length,
